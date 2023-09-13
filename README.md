@@ -171,7 +171,7 @@ The cleanest and easiest way to get started with KAMP is to use Moonraker's Upda
 
 * Using a probe that is not integrated into the printhead (Klicky, Euclid, etc)
   
-  * Usually have special macros that are used to attach and detach the probe as it is needed. 
+  * Usually have special macros that are used to attach and detach the probe specifically for mesh leveling. **Those need to be removed/uncommented from your config or they will cause issues.** We will instead call the docking/undocking macros inside of KAMP.
 
     * `probe_dock_enable:` By default, this setting is `False`. Set this to `True` if your machine has a probe that needs to be attached with a special macro before probing the bed.
 
@@ -207,6 +207,17 @@ It is required to add `max_extrude_cross_section: 5` to your `[extruder]` config
   * `smart_park_height:` This is the height at which you'd like your printhead to be when calling the `Smart_Park` macro. **Don't forget to add `Smart_Park` near the end of your `Print_Start` macro, *before* the final heating command is called.**
 
 ## Troubleshooting:
+
+<details>
+    <summary>
+        <b>
+        No matter what, meshes and purges are not adapting!
+        </b>
+    </summary>
+<p>
+</p>
+This happens when Moonraker's object processor is putting exclude object definitions in the wrong spot (AFTER Print_Start rather than before). This is usually fixed if you add M117 before your print_start macro in your slicer's starting gcode. M117 is just a basic "clear display" gcode, but will force the preprocessor to place the definition macros in the correct spot.
+</details>
 
 <details>
     <summary>
